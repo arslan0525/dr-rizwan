@@ -54,6 +54,8 @@ img {
   max-width: 100%;
   height: auto;
   display: block;
+  image-rendering: -webkit-optimize-contrast; /* HD quality rendering */
+  image-rendering: crisp-edges;
 }
 
 /* Utilities */
@@ -318,12 +320,18 @@ img {
 
 .hero-img {
   border-radius: 20px;
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
   position: relative;
   z-index: 2;
   width: 100%;
   height: auto;
-  border: 8px solid white;
+  border: 10px solid white;
+  filter: contrast(1.05) saturate(1.05); /* HD Pop */
+  transition: var(--transition);
+}
+
+.hero-img:hover {
+  filter: contrast(1.1) saturate(1.1);
 }
 
 /* Stats Floating Card */
