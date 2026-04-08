@@ -74,4 +74,74 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const fadeElements = document.querySelectorAll('.fade-up');
     fadeElements.forEach(el => observer.observe(el));
+
+    // Appointment Form Submission
+    const appointmentForm = document.getElementById('appointmentForm');
+    const formFeedback = document.getElementById('formFeedback');
+    const submitBtn = document.getElementById('submitBtn');
+
+    if (appointmentForm) {
+        appointmentForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Clear previous feedback
+            formFeedback.style.display = 'none';
+            formFeedback.className = 'form-feedback';
+            
+            // Basic Validation
+            const phone = document.getElementById('userPhone').value.trim();
+            const phoneRegex = /^(\+92|0)[3-9][0-9]{8,9}$/; // Pakistan phone format
+            
+            if (!phoneRegex.test(phone)) {
+                showFeedback('Please enter a valid Pakistan phone number (e.g. 03311234567)', 'error');
+                return;
+            }
+
+            // Set loading state
+            submitBtn.disabled = true;
+            submitBtn.classList.add('btn-loading');
+            submitBtn.innerText = 'Sending Request...';
+
+            // Prepare Data
+            const formData = {
+                name: document.getElementById('userName').value,
+                phone: phone,
+                date: document.getElementById('userDate').value,
+                condition: document.getElementById('userCondition').value,
+                message: document.getElementById('userMessage').value
+            };
+
+            try {
+                // Send to local backend (port 5000 is for our Node.js server)
+                const response = await fetch('http://localhost:5000/api/book-appointment', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showFeedback('Your appointment request has been sent successfully. We will contact you shortly.', 'success');
+                    appointmentForm.reset();
+                } else {
+                    throw new Error(result.error || 'Server error occurred');
+                }
+            } catch (error) {
+                console.error('Submission Error:', error);
+                showFeedback('Error: ' + error.message + '. Please try again or contact via WhatsApp directly.', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('btn-loading');
+                submitBtn.innerText = 'Get Pain Relief Today';
+            }
+        });
+    }
+
+    function showFeedback(message, type) {
+        formFeedback.innerText = message;
+        formFeedback.classList.add(type);
+        formFeedback.style.display = 'block';
+        formFeedback.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
 });

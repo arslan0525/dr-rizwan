@@ -341,31 +341,38 @@
                 
                 <div class="contact-form">
                     <h3 style="color: var(--primary-blue); margin-bottom: 2rem; font-size: 1.8rem;">Book Appointment</h3>
-                    <form onsubmit="event.preventDefault(); alert('Request submitted! Our physiotherapy team will contact you shortly.');">
+                    <form id="appointmentForm">
                         <div class="form-group">
                             <label>Full Name</label>
-                            <input type="text" class="form-control" placeholder="Enter your full name" required>
+                            <input type="text" id="userName" class="form-control" placeholder="Enter your full name" required>
                         </div>
                         <div class="form-group">
                             <label>Phone Number</label>
-                            <input type="tel" class="form-control" placeholder="Enter your mobile number" required>
+                            <input type="tel" id="userPhone" class="form-control" placeholder="Enter your mobile number" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Preferred Date & Time</label>
+                            <input type="datetime-local" id="userDate" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label>Condition / Symptom</label>
-                            <select class="form-control" required style="appearance: auto;">
+                            <select id="userCondition" class="form-control" required style="appearance: auto;">
                                 <option value="" disabled selected>What are you experiencing?</option>
-                                <option value="back">Back or Neck Pain</option>
-                                <option value="joint">Joint Pain / Arthritis</option>
-                                <option value="sports">Sports Injury</option>
-                                <option value="neuro">Stroke / Paralysis / Neurological</option>
-                                <option value="other">Other Issue</option>
+                                <option value="Anxiety/Fear">Constant fear or anxiety</option>
+                                <option value="Palpitations">Fast heartbeat / palpitations</option>
+                                <option value="Overthinking">Overthinking / excessive worry</option>
+                                <option value="Sleep Issues">Sleep problems</option>
+                                <option value="Panic">Panic feeling</option>
+                                <option value="Other">Other Issue</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Additional Details</label>
-                            <textarea class="form-control" placeholder="Tell us more about your physical condition..."></textarea>
+                            <textarea id="userMessage" class="form-control" placeholder="Tell us more about your mental health symptoms..."></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">Get Pain Relief Today</button>
+                        <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 100%;">Get Pain Relief Today</button>
+                        
+                        <div id="formFeedback" class="form-feedback" style="display: none; margin-top: 1.5rem; padding: 1rem; border-radius: 8px;"></div>
                     </form>
                 </div>
             </div>

@@ -990,6 +990,48 @@ textarea.form-control {
   line-height: 1.8;
 }
 
+/* Form Feedback */
+.form-feedback {
+  text-align: center;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.form-feedback.success {
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+  border: 1px solid #10b981;
+}
+
+.form-feedback.error {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+  border: 1px solid #ef4444;
+}
+
+.btn-loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+  position: relative;
+}
+
+.btn-loading::after {
+  content: "";
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 10px;
+  vertical-align: middle;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .hero-grid {
