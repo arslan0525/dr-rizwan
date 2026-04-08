@@ -111,30 +111,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 message: document.getElementById('userMessage').value
             };
 
-            try {
-                // Send to local backend (port 5000 is for our Node.js server)
-                const response = await fetch('http://localhost:5000/api/book-appointment', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(formData)
-                });
+            // Prepare formatted message for WhatsApp
+            const whatsappMessage = `*New Appointment Request*%0A%0A` +
+                `*Name:* ${formData.name}%0A` +
+                `*Phone:* ${formData.phone}%0A` +
+                `*Date/Time:* ${formData.date}%0A` +
+                `*Condition:* ${formData.condition}%0A` +
+                `*Details:* ${formData.message || 'No additional details'}`;
 
-                const result = await response.json();
+            // Open WhatsApp link
+            const waLink = `https://wa.me/923314341212?text=${whatsappMessage}`;
+            window.open(waLink, '_blank');
 
-                if (response.ok) {
-                    showFeedback('Your appointment request has been sent successfully. We will contact you shortly.', 'success');
-                    appointmentForm.reset();
-                } else {
-                    throw new Error(result.error || 'Server error occurred');
-                }
-            } catch (error) {
-                console.error('Submission Error:', error);
-                showFeedback('Error: ' + error.message + '. Please try again or contact via WhatsApp directly.', 'error');
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.classList.remove('btn-loading');
-                submitBtn.innerText = 'Get Pain Relief Today';
-            }
+            // Show success feedback
+            showFeedback('Redirecting to WhatsApp for final confirmation...', 'success');
+            appointmentForm.reset();
+            
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('btn-loading');
+            submitBtn.innerText = 'Get Pain Relief Today';
         });
     }
 
