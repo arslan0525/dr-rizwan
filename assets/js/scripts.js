@@ -88,12 +88,10 @@ document.addEventListener('DOMContentLoaded', () => {
             formFeedback.style.display = 'none';
             formFeedback.className = 'form-feedback';
             
-            // Basic Validation
+            // Minimum check to avoid totally empty fields while maintaining a smooth user experience
             const phone = document.getElementById('userPhone').value.trim();
-            const phoneRegex = /^(\+92|0)[3-9][0-9]{8,9}$/; // Pakistan phone format
-            
-            if (!phoneRegex.test(phone)) {
-                showFeedback('Please enter a valid Pakistan phone number (e.g. 03311234567)', 'error');
+            if (phone.length < 5) {
+                showFeedback('Please enter your phone number so we can reach you.', 'error');
                 return;
             }
 
